@@ -1,0 +1,6 @@
+[submodule "adlc-team-skills"]
+	path = adlc-team-skills
+	url = https://github.com/tikalk/adlc-team-skills
+[submodule "adlc-skills-cli"]
+	path = adlc-skills-cli
+	url = https://github.com/tikalk/adlc-skills-cli
