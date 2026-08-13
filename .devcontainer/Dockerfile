@@ -40,17 +40,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Development user (matches Coder's default coder user in the workspace). The
-# base enterprise-node image already provides `coder` (UID/GID 1000), so only
-# create it here when using a different base image.
-ARG USERNAME=coder
-ARG USER_UID=1000
-ARG USER_GID=1000
-RUN if ! id -u "$USERNAME" >/dev/null 2>&1; then \
-      groupadd --gid $USER_GID $USERNAME \
-      && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME; \
-    fi \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+# Development user. The base node image already provides a `node` user at
+# UID/GID 1000 — which matches the workspace's coder uid — so reuse it instead
+# of creating a conflicting `coder` user (groupadd would exit 4 on GID clash).
+# Granting passwordless sudo for the lifecycle scripts.
+ARG USERNAME=node
+RUN echo "$USERNAME ALL=\(root\) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Python tooling for evals / SDD
@@ -86,11 +81,12 @@ RUN npm install -g \
     typescript@latest
 
 # Ship the ADLC provisioning script so it is always on PATH regardless of
-# where the project repo is checked out.
-COPY --chown=$USERNAME:$USERNAME scripts/setup-adlc.sh /usr/local/bin/setup-adlc.sh
-RUN chmod +x /usr/local/bin/setup-adlc.sh
+# where the project repo is checked out. The `node` user owns it.
+COPY scripts/setup-adlc.sh /usr/local/bin/setup-adlc.sh
+RUN chown node:node /usr/local/bin/setup-adlc.sh \
+    && chmod +x /usr/local/bin/setup-adlc.sh
 
-USER $USERNAME
+USER node
 
 ENV SHELL=/bin/bash
 ENV PATH="/home/$USERNAME/.local/bin:${PATH}"
