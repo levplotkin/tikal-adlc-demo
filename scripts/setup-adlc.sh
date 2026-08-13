@@ -82,7 +82,10 @@ INIT_OPTIONS="$PROJECT_DIR/.adlc/init-options.json"
 mkdir -p "$PROJECT_DIR/.adlc"
 
 if [ ! -d "$PROJECT_DIR/.team-ai-directives" ]; then
-    git clone --depth 1 "$TEAM_DIRECTIVES_REPO" "$PROJECT_DIR/.team-ai-directives" 2>/dev/null \
+    # The public directives repo needs no auth. Coder injects GIT_ASKPASS
+    # (external-auth proxy via the public URL), which hangs on public repos
+    # behind Cloudflare Access — neutralise it for this well-known-public clone.
+    GIT_ASKPASS=/bin/true git clone --depth 1 "$TEAM_DIRECTIVES_REPO" "$PROJECT_DIR/.team-ai-directives" 2>/dev/null \
         && say "cloned team directives -> .team-ai-directives" \
         || warn "could not clone team directives (offline?) — continuing"
 fi
