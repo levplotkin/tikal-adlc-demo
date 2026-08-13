@@ -74,6 +74,6 @@
     "COLORTERM": "truecolor",
     "AUTO_TEAM_BOOT": "true",
     "ADLC_TEAM_SKILLS_REPO": "tikalk/adlc-team-skills",
-    "TEAM_DIRECTIVES_REPO": "https://github.com/tikalk/team-ai-directives"
+    "TEAM_DIRECTIVES_REPO": "https://github.com/tikalk/agentic-sdlc-team-ai-directives"
   }
 }

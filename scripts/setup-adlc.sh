@@ -20,7 +20,7 @@ PROJECT_DIR="${PROJECT_DIR:-$HOME}"
 WORKSPACE_REPO="${WORKSPACE_REPO:-$HOME}"
 ADLC_TEAM_SKILLS_REPO="${ADLC_TEAM_SKILLS_REPO:-tikalk/adlc-team-skills}"
 ADLC_SKILLS_CLI_PIN="${ADLC_SKILLS_CLI_PIN:-0.8.0}"
-TEAM_DIRECTIVES_REPO="${TEAM_DIRECTIVES_REPO:-https://github.com/tikalk/team-ai-directives}"
+TEAM_DIRECTIVES_REPO="${TEAM_DIRECTIVES_REPO:-https://github.com/tikalk/agentic-sdlc-team-ai-directives}"
 EVENT_CAPABLE_AGENTS="${EVENT_CAPABLE_AGENTS:-opencode claude-code cursor github-copilot codex gemini-cli qwen-code devin tabnine-cli}"
 
 # ── Helpers ────────────────────────────────────────────────────────────────
