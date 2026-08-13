@@ -48,9 +48,10 @@ ARG USERNAME=node
 RUN echo "$USERNAME ALL=\(root\) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Python tooling for evals / SDD
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir \
+# Python tooling for evals / SDD. --break-system-packages: Debian bookworm's
+# pip blocks system-env installs (PEP 668) — acceptable in an ephemeral image.
+RUN pip install --no-cache-dir --break-system-packages --upgrade pip \
+    && pip install --no-cache-dir --break-system-packages \
     promptfoo \
     deepeval \
     pytest \
