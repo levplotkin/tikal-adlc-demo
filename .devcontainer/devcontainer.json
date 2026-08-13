@@ -1,0 +1,79 @@
+{
+  "name": "Tikal ADLC Agentic Development",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "NODE_VERSION": "20",
+      "PYTHON_VERSION": "3.11"
+    }
+  },
+  "remoteUser": "coder",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  "postAttachCommand": "bash .devcontainer/post-attach.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.vscode-typescript-next",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "hashicorp.terraform",
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "files.autoSave": "afterDelay",
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    },
+    "coder": {
+      "autoStart": true,
+      "displayApps": {
+        "web_terminal": true,
+        "ssh_helper": true,
+        "port_forwarding_helper": true,
+        "vscode": true,
+        "vscode_insiders": false
+      }
+    }
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "OpenCode Web",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "MCP Server",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "Evals Dashboard",
+      "onAutoForward": "notify"
+    }
+  },
+  "forwardPorts": [3000, 8080, 8081],
+  "containerEnv": {
+    "TERM": "xterm-256color",
+    "COLORTERM": "truecolor",
+    "AUTO_TEAM_BOOT": "true",
+    "ADLC_TEAM_SKILLS_REPO": "tikalk/adlc-team-skills",
+    "TEAM_DIRECTIVES_REPO": "https://github.com/tikalk/team-ai-directives"
+  }
+}
